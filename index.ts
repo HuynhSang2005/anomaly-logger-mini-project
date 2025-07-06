@@ -12,12 +12,12 @@ function main() {
 
     // Kiểm tra xem người dùng đã cung cấp đường dẫn file chưa
     if (!filePath) {
-        logger.error('File path is required. Please provide the file path using the --file argument.');
-        logger.info('Example: bun analyze --file "data/transactions.xlsx"');
+        logger.error('Thiếu đường dẫn file. Vui lòng truyền tham số --file để chỉ định file cần phân tích.');
+        logger.info('Ví dụ: bun analyze --file "data/transactions.xlsx"');
         process.exit(1); // exit chương trình với error code
     }
 
-    logger.info(`Received request to analyze file: ${filePath}`);
+    logger.info(`Nhận yêu cầu phân tích file: ${filePath}`);
 
     // validate file
     const validationResult = validateExcelFile(filePath);
@@ -26,10 +26,10 @@ function main() {
         process.exit(1);
     }
 
-    logger.info('✅ File structure is valid.');
+    logger.info('✅ Cấu trúc file hợp lệ.');
 
     // run analysis
-    logger.info('Starting analysis...');
+    logger.info('Bắt đầu phân tích...');
     runAnalysis(filePath);
 
 }
