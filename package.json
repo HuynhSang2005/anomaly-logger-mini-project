@@ -12,6 +12,7 @@
     "typescript": "^5"
   },
   "dependencies": {
+    "@types/minimist": "^1.2.5",
     "minimist": "^1.2.8",
     "pino": "^9.7.0",
     "xlsx": "^0.18.5"
