@@ -1,6 +1,8 @@
 // src/index.ts
 import minimist from 'minimist';
 import logger from './src/utils/logger';
+import { validateExcelFile } from './src/core/fileValidator';
+import { runAnalysis } from './src/services/analysis.service';
 
 // Hàm chính để chạy tool
 function main() {
@@ -12,12 +14,23 @@ function main() {
     if (!filePath) {
         logger.error('File path is required. Please provide the file path using the --file argument.');
         logger.info('Example: bun analyze --file "data/transactions.xlsx"');
-        process.exit(1); // Thoát chương trình với mã lỗi
+        process.exit(1); // exit chương trình với error code
     }
 
     logger.info(`Received request to analyze file: ${filePath}`);
 
-    // Các bước kiểm tra và phân tích sẽ được thêm vào đây
+    // validate file
+    const validationResult = validateExcelFile(filePath);
+    if (!validationResult.isValid) {
+        logger.error(validationResult.message);
+        process.exit(1);
+    }
+
+    logger.info('✅ File structure is valid.');
+
+    // run analysis
+    runAnalysis(filePath);
+
 }
 
 // Chạy hàm chính

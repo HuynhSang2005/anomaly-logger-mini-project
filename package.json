@@ -3,6 +3,13 @@
   "module": "index.ts",
   "type": "module",
   "private": true,
+  "scripts": {
+    "start": "bun run index.ts",
+    "analyze": "bun src/index.ts",
+    "test": "bun test",
+    "format": "bun run prettier --write .",
+    "build": "bun run tsc"
+  },
   "devDependencies": {
     "@faker-js/faker": "^9.9.0",
     "@types/bun": "latest",
