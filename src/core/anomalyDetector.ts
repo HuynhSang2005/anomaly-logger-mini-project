@@ -1,12 +1,12 @@
 import type { AnomalyLog, Transaction } from "../types";
 
-// Nếu mà cái giáo dịch bất kì lớn hơn LARGE_TRANSACTION_THRESHOLD thì sẽ coi là bất thường
+// Nếu một giao dịch bất kỳ lớn hơn LARGE_TRANSACTION_THRESHOLD thì sẽ coi là bất thường
 const LARGE_TRANSACTION_THRESHOLD = 100_000_000;
 
 export function checkAnomaliesForTransaction(transaction: Transaction): AnomalyLog[] {
     const anomalies: AnomalyLog[] = [];
 
-    // Call các method để check và thu thập results
+    // Gọi các hàm kiểm tra và thu thập kết quả
     // Nếu có bất thường thì sẽ trả về một mảng các AnomalyLog
     const largeTx = checkLargeTransaction(transaction);
     if (largeTx) anomalies.push(largeTx);
@@ -20,35 +20,35 @@ export function checkAnomaliesForTransaction(transaction: Transaction): AnomalyL
     return anomalies;
 }
 
-// Case 1: Kiểm tra xem giao dịch có giá trị quá lớn không
+// Trường hợp 1: Kiểm tra xem giao dịch có giá trị quá lớn không
 function checkLargeTransaction(transaction: Transaction): AnomalyLog | null {
     if (transaction.Amount > LARGE_TRANSACTION_THRESHOLD) {
         return {
             transactionId: transaction.TransactionID,
             customerId: transaction.CustomerID,
-            ruleViolated: 'Large Amount Transaction',
-            details: `Transaction amount ${transaction.Amount.toLocaleString('vi-VN')} VND exceeds the threshold of ${LARGE_TRANSACTION_THRESHOLD.toLocaleString('vi-VN')} VND.`,
+            ruleViolated: 'Giao dịch giá trị lớn',
+            details: `Số tiền giao dịch ${transaction.Amount.toLocaleString('vi-VN')} VND vượt ngưỡng cho phép là ${LARGE_TRANSACTION_THRESHOLD.toLocaleString('vi-VN')} VND.`,
             timestamp: new Date().toISOString(),
         };
     }
     return null; // Không có bất thường
 }
 
-// Case 2: Kiểm tra xem số dư cuối kỳ có bị âm không
+// Trường hợp 2: Kiểm tra xem số dư cuối kỳ có bị âm không
 function checkNegativeBalance(transaction: Transaction): AnomalyLog | null {
     if (transaction.BalanceAfter < 0) {
         return {
             transactionId: transaction.TransactionID,
             customerId: transaction.CustomerID,
-            ruleViolated: 'Negative Balance',
-            details: `Account balance is negative after transaction: ${transaction.BalanceAfter.toLocaleString('vi-VN')} VND.`,
+            ruleViolated: 'Số dư âm',
+            details: `Tài khoản bị âm sau giao dịch: ${transaction.BalanceAfter.toLocaleString('vi-VN')} VND.`,
             timestamp: new Date().toISOString(),
         };
     }
     return null;
 }
 
-// case 3: Kiểm tra xem số dư có được tính toán đúng không
+// Trường hợp 3: Kiểm tra xem số dư có được tính toán đúng không
 function checkCalculationMismatch(transaction: Transaction): AnomalyLog | null {
     const expectedBalance = transaction.TransactionType === 'IN'
         ? transaction.BalanceBefore + transaction.Amount
@@ -59,10 +59,10 @@ function checkCalculationMismatch(transaction: Transaction): AnomalyLog | null {
         return {
             transactionId: transaction.TransactionID,
             customerId: transaction.CustomerID,
-            ruleViolated: 'Calculation Mismatch',
-            details: `Balance calculation mismatch. Expected: ${expectedBalance.toLocaleString('vi-VN')}, but got: ${transaction.BalanceAfter.toLocaleString('vi-VN')}.`,
+            ruleViolated: 'Sai lệch tính toán số dư',
+            details: `Sai lệch số dư. Kỳ vọng: ${expectedBalance.toLocaleString('vi-VN')}, thực tế: ${transaction.BalanceAfter.toLocaleString('vi-VN')}.`,
             timestamp: new Date().toISOString(),
         };
     }
-    return null;
+    return null; // Không có bất thường
 }
