@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "start": "bun run index.ts",
-    "analyze": "bun src/index.ts",
+    "analyze": "bun index.ts",
     "test": "bun test",
     "format": "bun run prettier --write .",
     "build": "bun run tsc"

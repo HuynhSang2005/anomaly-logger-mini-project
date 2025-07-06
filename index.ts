@@ -29,6 +29,7 @@ function main() {
     logger.info('✅ File structure is valid.');
 
     // run analysis
+    logger.info('Starting analysis...');
     runAnalysis(filePath);
 
 }
