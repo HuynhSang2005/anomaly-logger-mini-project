@@ -1,7 +1,3 @@
-
-
-// --- CẤU HÌNH CÁC NGƯỠNG ---
-
 import type { AnomalyLog, Transaction } from "../types";
 
 // Nếu mà cái giáo dịch bất kì lớn hơn LARGE_TRANSACTION_THRESHOLD thì sẽ coi là bất thường
@@ -11,7 +7,7 @@ export function checkAnomaliesForTransaction(transaction: Transaction): AnomalyL
     const anomalies: AnomalyLog[] = [];
 
     // Call các method để check và thu thập results
-    // Nếu có bất thường thì sẽ trả về một array các AnomalyLog
+    // Nếu có bất thường thì sẽ trả về một mảng các AnomalyLog
     const largeTx = checkLargeTransaction(transaction);
     if (largeTx) anomalies.push(largeTx);
 
