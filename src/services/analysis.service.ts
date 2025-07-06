@@ -2,6 +2,7 @@
 import logger from '../utils/logger';
 import { readTransactionsFromFile } from '../core/dataReader';
 import { checkAnomaliesForTransaction } from '../core/anomalyDetector';
+import { generateTxtReport } from '../core/reportGenerator';
 import type { AnomalyLog } from '../types';
 
 export function runAnalysis(filePath: string): AnomalyLog[] {
@@ -16,9 +17,7 @@ export function runAnalysis(filePath: string): AnomalyLog[] {
         for (const transaction of transactions) {
             const anomalies = checkAnomaliesForTransaction(transaction);
             if (anomalies.length > 0) {
-                // Add các bất thường vừa tìm thấy vào danh sách tổng
                 allAnomalies.push(...anomalies);
-                // Dùng logger để ghi lại bất thường
                 anomalies.forEach(anomaly => {
                     logger.warn({ anomaly }, 'Anomaly Detected!');
                 });
@@ -26,9 +25,11 @@ export function runAnalysis(filePath: string): AnomalyLog[] {
         }
 
         if (allAnomalies.length > 0) {
-            logger.info(`✅ Analysis complete. Found ${allAnomalies.length} anomalies.`);
+            logger.info(`Analysis complete. Found ${allAnomalies.length} anomalies.`);
+            // GỌI HÀM TẠO BÁO CÁO Ở ĐÂY
+            generateTxtReport(allAnomalies, 'reports');
         } else {
-            logger.info('✅ Analysis complete. No anomalies found.');
+            logger.info('Analysis complete. No anomalies found.');
         }
 
         return allAnomalies;
@@ -39,6 +40,6 @@ export function runAnalysis(filePath: string): AnomalyLog[] {
         } else {
             logger.error('Analysis failed due to an unknown error.');
         }
-        return []; // return về empty array nếu có error
+        return [];
     }
 }
