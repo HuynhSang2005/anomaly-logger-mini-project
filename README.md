@@ -1,13 +1,18 @@
 <p align="center">
   <img src="https://bun.sh/logo.svg" width="120" alt="Bun.js Logo" />
 </p>
+<div align="center">
+
+  ![Bun](https://img.shields.io/badge/Bun-1.1.20-%23000000)
+  ![TypeScript](https://img.shields.io/badge/TypeScript-5.5.3-%233178C6)
+  ![Pino](https://img.shields.io/badge/pino.js-9.7.0-blue)
+  ![xlsx](https://img.shields.io/badge/xlsx-0.18.5-brightgreen)
+
+</div>
 
 # Công Cụ Ghi Nhận Giao Dịch Bất Thường (Anomaly Logger)
 
-![Bun](https://img.shields.io/badge/Bun-1.1.20-%23000000)
-![TypeScript](https://img.shields.io/badge/TypeScript-5.5.3-%233178C6)
-![Pino](https://img.shields.io/badge/pino.js-9.7.0-blue)
-![xlsx](https://img.shields.io/badge/xlsx-0.18.5-brightgreen)
+
 
 Đây là một dự án mini xây dựng công cụ dòng lệnh (CLI) bằng **Bun.js** và **TypeScript** để tự động phân tích các file giao dịch Excel, phát hiện những giao dịch bất thường dựa trên một bộ quy tắc được định sẵn và xuất báo cáo chi tiết.
 
