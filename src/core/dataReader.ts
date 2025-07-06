@@ -8,13 +8,13 @@ export function readTransactionsFromFile(filePath: string): Transaction[] {
 
         // Nếu không tìm thấy sheet nào trong file sẽ throw error
         if (!sheetName) {
-            throw new Error("The Excel file is empty or does not contain any sheets.");
+            throw new Error("File Excel không có sheet nào hoặc đang trống.");
         }
 
         const worksheet = workbook.Sheets[sheetName];
 
         if (!worksheet) {
-            throw new Error(`Sheet with name "${sheetName}" not found in the workbook.`);
+            throw new Error(`Không tìm thấy sheet tên "${sheetName}" trong file Excel.`);
         }
 
         // convert sheet thành array JSON với kiểu Transaction
@@ -23,11 +23,11 @@ export function readTransactionsFromFile(filePath: string): Transaction[] {
 
     } catch (error) {
         if (error instanceof Error) {
-            console.error(`❌ Error reading Excel file: ${error.message}`);
+            console.error(`❌ Lỗi khi đọc file Excel: ${error.message}`);
             // Ném lại error để bên ngoài có thể bắt được
             throw error;
         }
         // error không xác định
-        throw new Error(`An unknown error occurred while reading file at: ${filePath}`);
+        throw new Error(`Đã xảy ra lỗi không xác định khi đọc file: ${filePath}`);
     }
 }
